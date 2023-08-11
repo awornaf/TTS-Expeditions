@@ -32,7 +32,7 @@ function select_Mech(ojb, color)
     --Moving the Mech mat to the associated location
     self.setPositionSmooth(playerLoc)
     --Move the associated Mech model to the mat
-    local model = getObjectFromGUID('4eb361') --The Mech Model is hard coded here!
+    local model = getObjectFromGUID('054ab1') --The Mech Model is hard coded here!
     model.setPositionSmooth({playerLoc[1], (playerLoc[2]+3), playerLoc[3]})
 
     --If the player is on the left or right side of the table, the mat needs to be rotated and the placement of tokens is different
