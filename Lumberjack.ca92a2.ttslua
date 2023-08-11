@@ -1,0 +1,49 @@
+function onLoad(save_state)
+  local name = self.getName()
+  local label = "Select \n" .. name
+
+-- This will create a button on the object when it is loaded into the world.
+  self.createButton({
+    click_function = "select_Mech", -- This is a required feild
+    function_owner = self, -- This is a required feild
+    label = label, -- If you want the button to have Text on it.
+    position = {0, 0.1, 0}, -- If you put this on the standard Cube, it will be right on top.
+    rotation = {0, 0, 0}, -- if you want to rotate the button.
+    scale = {1, 1, 1}, -- If you want to mess with the scale (helps with text sizes sometimes)
+    width = 600,
+    height = 300,
+    tooltip = "Select this Mech!", -- If you want a floating tooltip when hovering over button
+  })
+end
+
+function select_Mech(ojb, color)
+    local PowerBag_GUID = Global.getVar('PowerBag_GUID')
+    local GuileBag_GUID = Global.getVar('GuileBag_GUID')
+    local actionCube_Array = Global.getTable('actionCube_Array')
+
+    --Using playerIndex to figure out which player is clicking, and then moving the Mech mat to the associated location
+    local playerNum = Global.call("playerIndex", {color})
+    local playerArray = Global.getTable('playerLoc_Array')
+    local playerLoc = playerArray[playerNum]
+    self.setPositionSmooth(playerLoc)
+
+    --Drawing a power and guile token, and placing them on the mech mat
+    local power = getObjectFromGUID(PowerBag_GUID)
+    local guile = getObjectFromGUID(GuileBag_GUID)
+
+    powerLoc = {(playerLoc[1] -2.40), playerLoc[2], (playerLoc[3] -2.16)}
+    power.takeObject({position = powerLoc})
+    guileLoc = {(playerLoc[1] -1.91), playerLoc[2], (playerLoc[3] -2.18)}
+    guile.takeObject({position = guileLoc})
+
+    --Making an Action Cube for the player in their color
+    local actionCube = getObjectFromGUID(actionCube_Array[playerNum])
+    cubeLoc = {(playerLoc[1] +2.20), playerLoc[2]+2, (playerLoc[3] +1.38)}
+    actionCube.setPositionSmooth(cubeLoc)
+
+    --Move the associated Mech model to the Basecamp
+    local model = getObjectFromGUID('4eb361')
+    model.setPositionSmooth(playerLoc)
+
+    self.clearButtons()
+end

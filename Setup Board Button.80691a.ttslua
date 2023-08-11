@@ -1,61 +1,65 @@
 function onLoad(save_state)
 
--- This will create a button on the object when it is loaded into the world.
-  self.createButton({
-    click_function = "setup_Board", -- This is a required feild
-    function_owner = self, -- This is a required feild
-    label = "Setup Board", -- If you want the button to have Text on it.
-    position = {0, 0.5, 0}, -- If you put this on the standard Cube, it will be right on top.
-    rotation = {0, 0, 0}, -- if you want to rotate the button.
-    scale = {1, 1, 1}, -- If you want to mess with the scale (helps with text sizes sometimes)
-    width = 600,
-    height = 200,
-    tooltip = "Puts all Locations and Cards into play. ", -- If you want a floating tooltip when hovering over button
-  })
+    -- This will create a button on the object when it is loaded into the world.
+    self.createButton({
+
+      click_function = "setup_Board", -- This is a required feild
+
+      function_owner = self, -- This is a required feild
+
+      label = "Setup Board", -- If you want the button to have Text on it.
+
+      position = {0, 0.5, 0}, -- If you put this on the standard Cube, it will be right on top.
+
+      rotation = {0, 0, 0}, -- if you want to rotate the button.
+
+      scale = {1, 1, 1}, -- If you want to mess with the scale (helps with text sizes sometimes)
+
+      width = 600,
+
+      height = 200,
+
+      tooltip = "Puts all Locations and Cards into play. ", -- If you want a floating tooltip when hovering over button
+    })
+
+
+  --Initialize decks
+  DECK_GUID = Global.getVar('DECK_GUID')
+  South_GUID = "ed426c"
+  Central_GUID = "0d043f"
+  North_GUID = "8eccb2"
+
+  --Initialize Resources
+  MapBag_GUID = Global.getVar('MapBag_GUID')
+  --Initialize positions to deal cards
+  cardPos_Array = Global.getTable('cardPos_Array')
+
+  south_pos1 = {-5.1, 3, 0.54}
+  south_pos2 = {-2.52, 3, -0.95}
+  south_pos3 = {0.1, 3, 0.56}
+  south_pos4 = {0.09, 3, -2.46}
+  south_pos5 = {2.69, 3, -0.91}
+  south_pos6 = {5.28, 3, 0.56}
+  southPos_Array = {south_pos1, south_pos2, south_pos3, south_pos4, south_pos5, south_pos6}
+
+  central_pos1 = {-7.69, 3, 4.97}
+  central_pos2 = {-5.05,  3, 3.50}
+  central_pos3 = {-2.52, 3, 5}
+  central_pos4 = {0.08, 3, 3.53}
+  central_pos5 = {2.63, 3, 4.99}
+  central_pos6 = {5.25, 3, 3.52}
+  central_pos7 = {7.86, 3, 5}
+  centralPos_Array = {central_pos1, central_pos2, central_pos3, central_pos4, central_pos5, central_pos6, central_pos7}
+
+  north_pos1 = {-7.72, 3,7.95}
+  north_pos2 = {-5.05, 3, 9.33}
+  north_pos3 = {-2.5, 3, 7.93}
+  north_pos4 = {0.05, 3, 9.41}
+  north_pos5 = {2.64, 3, 7.92}
+  north_pos6 = {5.22, 3, 9.48}
+  north_pos7 = {7.85, 3, 8.01}
+  northPos_Array = {north_pos1, north_pos2, north_pos3, north_pos4, north_pos5, north_pos6, north_pos7}
 end
-
---Initialize decks
-DECK_GUID = "e2d9f0"
-South_GUID = "ed426c"
-Central_GUID = "0d043f"
-North_GUID = "8eccb2"
-
---Initialize Resources
-MapBag_GUID = "7fc2eb"
-
---Initialize positions to deal cards
-card_pos1 = {-4.78, 2, 6.29}
-card_pos2 = {0.41, 2, 6.32}
-card_pos3 = {5.54, 2, 6.31}
-card_pos4 = {-2.13, 2, 1.87}
-card_pos5 = {3.02, 2, 1.89}
-cardPos_Array = {card_pos1, card_pos2, card_pos3, card_pos4, card_pos5}
-
-south_pos1 = {-4.75, 3, 0.37}
-south_pos2 = {-2.17, 3, -1.12}
-south_pos3 = {0.45, 3, 0.41}
-south_pos4 = {0.46, 3, -2.62}
-south_pos5 = {3.04, 3, -1.09}
-south_pos6 = {5.63, 3, 0.39}
-southPos_Array = {south_pos1, south_pos2, south_pos3, south_pos4, south_pos5, south_pos6}
-
-central_pos1 = {-7.34, 3, 4.80}
-central_pos2 = {-4.72, 3, 3.32}
-central_pos3 = {-2.16, 3, 4.84}
-central_pos4 = {0.43, 3, 3.36}
-central_pos5 = {2.98, 3, 4.82}
-central_pos6 = {5.60, 3, 3.35}
-central_pos7 = {8.21, 3, 4.83}
-centralPos_Array = {central_pos1, central_pos2, central_pos3, central_pos4, central_pos5, central_pos6, central_pos7}
-
-north_pos1 = {-7.37, 3,7.77}
-north_pos2 = {-4.75, 3, 9.23}
-north_pos3 = {-2.15, 3, 7.76}
-north_pos4 = {0.40, 3, 9.25}
-north_pos5 = {3.00, 3, 7.74}
-north_pos6 = {5.57, 3, 9.29}
-north_pos7 = {8.20, 3, 7.84}
-northPos_Array = {north_pos1, north_pos2, north_pos3, north_pos4, north_pos5, north_pos6, north_pos7}
 
 function setup_Board()
   --Shuffle South tiles and deal face up
@@ -64,16 +68,16 @@ function setup_Board()
   for i = 1, 6 do
     south.takeObject({flip = true, position = southPos_Array[i]})
   end
-
   --Shuffle Central tiles, deal face down, put Map token on top
+  print(MapBag_GUID)
   local maps = getObjectFromGUID(MapBag_GUID)
+
   local central = getObjectFromGUID(Central_GUID)
   central.randomize()
   for i = 1, 7 do
     central.takeObject({flip = false, position = centralPos_Array[i]})
     maps.takeObject({position = centralPos_Array[i]})
   end
-
   --Shuffle North tiles, deal face down, put Map token on top
   local north = getObjectFromGUID(North_GUID)
   north.randomize()
@@ -89,6 +93,5 @@ function setup_Board()
     cards.takeObject({flip = true, position = cardPos_Array[i]})
   end
 
-  --Button removes itself
   destroyObject(self)
 end
