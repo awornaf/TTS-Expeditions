@@ -2,26 +2,16 @@ function onLoad(save_state)
 
     -- This will create a button on the object when it is loaded into the world.
     self.createButton({
-
       click_function = "setup_Board", -- This is a required feild
-
       function_owner = self, -- This is a required feild
-
       label = "Setup Board", -- If you want the button to have Text on it.
-
-      position = {0, 0.5, 0}, -- If you put this on the standard Cube, it will be right on top.
-
+      position = {7.5, 0.75, 7.5}, -- If you put this on the standard Cube, it will be right on top.
       rotation = {0, 0, 0}, -- if you want to rotate the button.
-
       scale = {1, 1, 1}, -- If you want to mess with the scale (helps with text sizes sometimes)
-
       width = 600,
-
       height = 200,
-
-      tooltip = "Puts all Locations and Cards into play. ", -- If you want a floating tooltip when hovering over button
+      tooltip = "Puts all Locations and Cards into play.", -- If you want a floating tooltip when hovering over button
     })
-
 
   --Initialize decks
   DECK_GUID = Global.getVar('DECK_GUID')
@@ -59,9 +49,22 @@ function onLoad(save_state)
   north_pos6 = {5.22, 3, 9.48}
   north_pos7 = {7.85, 3, 8.01}
   northPos_Array = {north_pos1, north_pos2, north_pos3, north_pos4, north_pos5, north_pos6, north_pos7}
+
+  mechMat_Array = Global.getTable('mechMat_Array')
+  startZone_GUID = "eacfa3"
 end
 
 function setup_Board()
+  --Move any remaining mech mats to the corner
+  local startZone = getObjectFromGUID(startZone_GUID)
+  local zoneItems = startZone.getObjects()
+  for i = 1, #mechMat_Array do
+    local playmat = getObjectFromGUID(mechMat_Array[i])
+    if playmat.getZones()[1] == startZone then
+      playmat.setPositionSmooth({25.39,3,15.48})
+    end
+  end
+
   --Shuffle South tiles and deal face up
   local south = getObjectFromGUID(South_GUID)
   south.randomize()
@@ -69,7 +72,6 @@ function setup_Board()
     south.takeObject({flip = true, position = southPos_Array[i]})
   end
   --Shuffle Central tiles, deal face down, put Map token on top
-  print(MapBag_GUID)
   local maps = getObjectFromGUID(MapBag_GUID)
 
   local central = getObjectFromGUID(Central_GUID)
@@ -93,5 +95,5 @@ function setup_Board()
     cards.takeObject({flip = true, position = cardPos_Array[i]})
   end
 
-  destroyObject(self)
+  self.removeButton(0)
 end

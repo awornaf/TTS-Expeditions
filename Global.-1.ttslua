@@ -33,6 +33,14 @@ function onLoad()
   playerLoc_White = {19, 3, -13}
   playerLoc_Purple = {23, 3, 3}
   playerLoc_Array = {playerLoc_Yellow, playerLoc_Blue, playerLoc_Red, playerLoc_White, playerLoc_Purple}
+
+  --Initialize mech mats
+  mechMat1_GUID = "932e35" --Highlander
+  mechMat2_GUID = "fb1966" --Marsh Strider
+  mechMat3_GUID = "8dc60f" --Odins Wrath
+  mechMat4_GUID = "ca92a2" --Lumberjack
+  mechMat5_GUID = "3d34ae" --Tatanka
+  mechMat_Array = {mechMat1_GUID, mechMat2_GUID, mechMat3_GUID, mechMat4_GUID, mechMat5_GUID}
 end
 
 function playerIndex(playerColor)
