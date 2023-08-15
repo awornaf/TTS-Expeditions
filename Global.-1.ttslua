@@ -41,6 +41,24 @@ function onLoad()
   mechMat4_GUID = "ca92a2" --Lumberjack
   mechMat5_GUID = "3d34ae" --Tatanka
   mechMat_Array = {mechMat1_GUID, mechMat2_GUID, mechMat3_GUID, mechMat4_GUID, mechMat5_GUID}
+
+  --Companion GUIDs
+  jiro_GUID = "72a9c6"
+  caesar_GUID = "095132"
+  wojtek_GUID = "311cf2"
+  voltan_GUID = "f07702"
+  nacht_GUID = "9d0910"
+  changa_GUID = "7c9cef"
+  companion_Array = {jiro_GUID, caesar_GUID, wojtek_GUID, voltan_GUID, nacht_GUID, changa_GUID}
+
+  --Character GUIDs
+  akiko_GUID = "28cbc1"
+  matthew_GUID = "dc2a99"
+  anna_GUID = "5931ec"
+  vesna_GUID = "db2923"
+  gunter_GUID = "873ab0"
+  olga_GUID = "7ac11b"
+  character_Array ={akiko_GUID, matthew_GUID, anna_GUID, vesna_GUID, gunter_GUID, olga_GUID}
 end
 
 function playerIndex(playerColor)
@@ -58,6 +76,24 @@ function playerIndex(playerColor)
     else
       error('The color you selected does NOT work with the scripting. Please play as the Yellow, Blue, Red, White, or Purple player.')
     end
+end
+
+function findCompanion(character)
+  if character == "Akiko" then
+    return companion_Array[1]
+  elseif  character == "Matthew" then
+      return companion_Array[2]
+  elseif  character == "Anna" then
+      return companion_Array[3]
+  elseif  character == "Vesna" then
+      return companion_Array[4]
+  elseif  character == "Gunter" then
+      return companion_Array[5]
+  elseif  character == "Olga" then
+      return companion_Array[6]
+  else
+    error("Who are you looking for? " .. character .. " isn't in this game.")
+  end
 end
 
 function reveal_Location()

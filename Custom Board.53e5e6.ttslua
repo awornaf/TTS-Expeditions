@@ -52,16 +52,37 @@ function onLoad(save_state)
 
   mechMat_Array = Global.getTable('mechMat_Array')
   startZone_GUID = "eacfa3"
+  char_Array = Global.getTable('character_Array')
+  comp_Array = Global.getTable('companion_Array')
 end
 
 function setup_Board()
-  --Move any remaining mech mats to the corner
-  local startZone = getObjectFromGUID(startZone_GUID)
-  local zoneItems = startZone.getObjects()
+  --Move any leftover mech mats, characters, and companions to the corner
+  local boardZone = getObjectFromGUID(boardZone_GUID)
+  local zoneItems = boardZone.getObjects()
   for i = 1, #mechMat_Array do
     local playmat = getObjectFromGUID(mechMat_Array[i])
-    if playmat.getZones()[1] == startZone then
+    if playmat.getZones()[1] == boardZone then
       playmat.setPositionSmooth({25.39,3,15.48})
+      playmat.removeButton(0)
+    end
+  end
+
+  local charZone = getObjectFromGUID(charZone_GUID)
+  local unusedChars = charZone.getObjects()
+
+  for i = 1, #char_Array do
+    local leftover = getObjectFromGUID(char_Array[i])
+    if leftover.getZones()[1] == charZone then
+      leftover.setPositionSmooth({25.39,3,15.48})
+      leftover.removeButton(0)
+    end
+  end
+
+  for i = 1, #comp_Array do
+    local leftover = getObjectFromGUID(comp_Array[i])
+    if leftover.getZones()[1] == charZone then
+      leftover.setPositionSmooth({25.39,3,15.48})
     end
   end
 

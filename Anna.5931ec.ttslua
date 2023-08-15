@@ -1,0 +1,49 @@
+function onLoad(save_state)
+  local name = self.getName()
+  local companion_GUID = Global.call("findCompanion", name)
+  companion = getObjectFromGUID(companion_GUID)
+  local compName = companion.getName()
+  local label = "Select \n" .. name .. " & ".. compName
+
+-- This will create a button on the object when it is loaded into the world.
+  self.createButton({
+    click_function = "select_Char", -- This is a required feild
+    function_owner = self, -- This is a required feild
+    label = label, -- If you want the button to have Text on it.
+    position = {1.5, 0.5, 2.1}, -- If you put this on the standard Cube, it will be right on top.
+    rotation = {0, 0, 0}, -- if you want to rotate the button.
+    scale = {1, 1, 1}, -- If you want to mess with the scale (helps with text sizes sometimes)
+    width = 2000,
+    height = 400,
+    tooltip = "Select the above character!", -- If you want a floating tooltip when hovering over button
+  })
+end
+
+function select_Char(obj, color)
+  --Using playerIndex to figure out which player is clicking
+  local playerNum = Global.call("playerIndex", {color})
+  local playerArray = Global.getTable('playerLoc_Array')
+  local playerLoc = playerArray[playerNum]
+  local cardDestination = {(playerLoc[1] -4.71), (playerLoc[2]+3), (playerLoc[3] +1.54)}
+  --Moving the character to the associated location
+  --If the player is on the left or right side of the table, the mat needs to be rotated and the placement of tokens is different
+  if playerNum == 1 then
+    self.setRotationSmooth({0, -90, 0})
+    companion.setRotationSmooth({0, -90, 0})
+    cardDestination = {(playerLoc[1] +1.83), (playerLoc[2]+3), (playerLoc[3] +4.73)}
+
+    self.setPositionSmooth(cardDestination)
+    companion.setPositionSmooth({cardDestination[1] - 2.5, cardDestination[2], cardDestination[3] })
+  elseif playerNum == 5 then
+    self.setRotationSmooth({0, 90, 0})
+    companion.setRotationSmooth({0, 90, 0})
+    cardDestination = {(playerLoc[1] -1.47), (playerLoc[2]+3), (playerLoc[3] -4.54)}
+
+    self.setPositionSmooth(cardDestination)
+    companion.setPositionSmooth({cardDestination[1]+2.5, cardDestination[2], cardDestination[3]})
+  else
+    self.setPositionSmooth(cardDestination)
+    companion.setPositionSmooth({cardDestination[1], cardDestination[2], cardDestination[3] - 2.5})
+  end
+  self.clearButtons()
+end
