@@ -11,6 +11,20 @@ function onLoad()
   PowerBag_GUID = "8ec3ec"
   GuileBag_GUID = "e590a9"
 
+  --Initialize secondary resource bag
+  secondBag_GUID = "766fa1"
+  oneCoins_GUID = "d1a014"
+  threeCoins_GUID = "e1270b"
+  fiveCoins_GUID = "1d3173"
+  tenCoins_GUID = "7b5f42"
+  twentyCoins_GUID = "af19a3"
+  blueWorker_GUID = "d10dbc"
+  greenWorker_GUID = "9d79de"
+  yellowWorker_GUID = "3613c2"
+  redWorker_GUID = "73609f"
+  purpleWorker_GUID = "794e11"
+
+  --Initialize player action cubes
   actionCube_Yellow = "cd86d3"
   actionCube_Blue = "d9f449"
   actionCube_Red = "253cc8"

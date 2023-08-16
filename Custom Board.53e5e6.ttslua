@@ -54,6 +54,8 @@ function onLoad(save_state)
   startZone_GUID = "eacfa3"
   char_Array = Global.getTable('character_Array')
   comp_Array = Global.getTable('companion_Array')
+  secondBag_GUID = Global.getVar('secondBag_GUID')
+  secondBag = getObjectFromGUID(secondBag_GUID)
 end
 
 function setup_Board()
@@ -85,6 +87,14 @@ function setup_Board()
       leftover.setPositionSmooth({25.39,3,15.48})
     end
   end
+
+  --Pull out right side resources
+  for k = 1, 10 do
+    local new = secondBag.takeObject({position = {14, 0.95, (-7 + (1.5 * k))}, index = 0})
+    new.setLock(true)
+  end
+  secondBag.setLock(false)
+  secondBag.setPositionSmooth({25.39,3,15.48})
 
   --Shuffle South tiles and deal face up
   local south = getObjectFromGUID(South_GUID)
